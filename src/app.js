@@ -1,9 +1,11 @@
 const express = require("express");
 const config = require("./utils/config");
+const dbInterface = require("./controllers/dbInterface");
 
 const startServer = async () => {
   const app = express();
-  app.listen(config.PORT, err => {
+  dbInterface(app);
+  app.listen(config.PORT, (err) => {
     if (err) {
       console.log(err);
     }
