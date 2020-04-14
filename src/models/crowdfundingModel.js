@@ -1,19 +1,4 @@
 const mongoose = require("mongoose");
-const config = require("../utils/config");
-const url = config.MONGODB_URI;
-
-mongoose
-  .connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-  .then((result) => {
-    console.log("connected to MongoDB");
-  })
-  .catch((error) => {
-    console.log("error connecting to MongoDB:", error.message);
-  });
 
 const crowdfundingSchema = new mongoose.Schema({
   campaignID: {
