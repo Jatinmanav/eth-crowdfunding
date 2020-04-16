@@ -31,4 +31,20 @@ module.exports = function (app) {
         });
     });
   });
+
+  app.get("/api/crowdfunding/get_all_campaigns", function (req, res) {
+    Crowdfunding.find(
+      { completed: false },
+      {
+        campaignImage: false,
+        completed: false,
+      }
+    )
+      .then((objects) => {
+        res.json(["Success", objects]);
+      })
+      .catch((error) => {
+        res.json[("Error", error)];
+      });
+  });
 };
