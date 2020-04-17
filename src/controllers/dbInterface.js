@@ -47,4 +47,10 @@ module.exports = function (app) {
         res.json[("Error", error)];
       });
   });
+
+  app.post("/api/crowdfunding/get_one_campaign", function (req, res) {
+    Crowdfunding.findOne({ campaignName: req.body.campaignName })
+      .then((object) => res.json(["success", object]))
+      .catch((error) => res.json(["error", error]));
+  });
 };
