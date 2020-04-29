@@ -1,7 +1,7 @@
 import axios from "axios";
 import config from "../utils/config";
 
-const url = "/api/signin";
+const url = "/api/user_auth/signin";
 axios.defaults.baseURL = config.BASE_URL;
 
 const verifyUser = (newObject) => {

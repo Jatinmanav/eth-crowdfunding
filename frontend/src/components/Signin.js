@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import Colors from "../utils/ColorVariables";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -82,7 +81,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
-  const { setUserData } = useContext(AuthContext);
+  const { setAuthenticated } = useContext(AuthContext);
   const classes = useStyles();
   const animatedStyle = useSpring({
     opacity: 1,
@@ -107,14 +106,15 @@ const Signin = () => {
   const verifyUser = async (newObject) => {
     const [isValidUser, userData] = await signinService(newObject);
     console.log(isValidUser);
+    console.log(userData);
     console.log(typeof isValidUser);
     if (isValidUser === "name") {
       setErrorMessage("Invalid Email");
       setOpen(true);
     } else if (isValidUser) {
       console.log("success");
-      setUserData(userData);
-      //setAuthenticated('test');
+      //setUserData(userData);
+      setAuthenticated("test");
     } else {
       console.log("fail");
       setErrorMessage("Invalid Password");
@@ -149,7 +149,6 @@ const Signin = () => {
     <animated.div style={animatedStyle}>
       <ThemeProvider theme={theme}>
         <Grid container component="main" className={classes.root}>
-          <CssBaseline />
           <Grid item xs={false} sm={4} md={7} className={classes.image} />
           <Grid
             item

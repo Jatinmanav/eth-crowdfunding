@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import Colors from "../utils/ColorVariables";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
@@ -81,7 +80,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
-  const { setAuthenticated, setUserData } = useContext(AuthContext);
+  const { setAuthenticated } = useContext(AuthContext);
 
   const classes = useStyles();
 
@@ -132,7 +131,6 @@ const SignUp = () => {
     console.log(result);
     console.log(userData);
     if (result === true) {
-      setUserData(userData);
       setAuthenticated("test");
     } else {
       setErrorMessage("Email is already registered");
@@ -167,7 +165,6 @@ const SignUp = () => {
       <animated.div style={animationStyle}>
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <Card className={classes.card}>
               <div className={classes.paper}>
                 <Avatar className={classes.avatar}>

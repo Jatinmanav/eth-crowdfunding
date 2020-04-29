@@ -27,12 +27,10 @@ export const AuthContextProvider = (props) => {
     return [storedValue, setValue];
   }
 
-  const [auth, setAuth] = useState({
-    isAuthenticated: false,
+  const [auth, setAuth] = useLocalStorage("auth", {
+    isAuthenticated: true,
     userName: "",
   });
-
-  const [userData, setUserData] = useLocalStorage("userData", null);
 
   const setAuthenticated = (name) => {
     setAuth({
@@ -46,17 +44,14 @@ export const AuthContextProvider = (props) => {
       isAuthenticated: false,
       userName: "",
     });
-    setUserData(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
         auth,
-        userData,
         setAuthenticated,
         setLoggedOut,
-        setUserData,
       }}
     >
       {props.children}
