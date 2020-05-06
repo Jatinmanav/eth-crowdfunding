@@ -48,8 +48,8 @@ module.exports = function (app) {
       });
   });
 
-  app.get("/api/crowdfunding/get_one_campaign", function (req, res) {
-    Crowdfunding.findOne({ campaignName: req.query.id })
+  app.get("/api/crowdfunding/get_one_campaign/:id", function (req, res) {
+    Crowdfunding.findOne({ campaignName: req.params.id })
       .then((object) => res.json(["success", object]))
       .catch((error) => res.json(["error", error]));
   });

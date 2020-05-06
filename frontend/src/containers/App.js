@@ -5,6 +5,7 @@ import { AuthContextProvider } from "../contexts/AuthContext";
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
 import Header from "../components/Header";
+import Browse from "../components/Browse";
 import colorVariables from "../utils/ColorVariables";
 
 const useStyles = makeStyles(() => ({
@@ -33,6 +34,9 @@ export default function App() {
             </Route>
             <Route path="/signup">
               <Signup />
+            </Route>
+            <Route path="/browse">
+              <Browse />
             </Route>
             <Route path="/" render={() => <h1>Error 404: Page not found</h1>} />
           </Switch>
