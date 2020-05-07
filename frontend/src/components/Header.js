@@ -114,12 +114,12 @@ const Header = () => {
             <ListItemText primary="Home" />
           </ListItem>
         </Link>
-        <Link to="/browse" className={classes.listItem}>
-          <ListItem button key="browse">
+        <Link to="/explore" className={classes.listItem}>
+          <ListItem button key="explore">
             <ListItemIcon>
               <ViewModuleRoundedIcon color="secondary" />
             </ListItemIcon>
-            <ListItemText primary="Browse" />
+            <ListItemText primary="Explore" />
           </ListItem>
         </Link>
       </List>
