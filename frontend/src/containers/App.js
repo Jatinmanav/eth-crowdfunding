@@ -6,6 +6,7 @@ import Signin from "../components/Signin";
 import Signup from "../components/Signup";
 import Header from "../components/Header";
 import Explore from "../components/Explore";
+import Campaign from "../components/Campaign";
 import colorVariables from "../utils/ColorVariables";
 
 const useStyles = makeStyles(() => ({
@@ -37,6 +38,9 @@ export default function App() {
             </Route>
             <Route path="/explore">
               <Explore />
+            </Route>
+            <Route path="/campaigns/">
+              <Campaign />
             </Route>
             <Route path="/" render={() => <h1>Error 404: Page not found</h1>} />
           </Switch>

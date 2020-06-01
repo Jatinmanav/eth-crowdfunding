@@ -1,27 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Product from "./Product";
 import getCampaignsService from "../services/getAllCampaignsComponent";
 import { Typography, Paper } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing(2),
-  },
-}));
-
 const Explore = () => {
   const [campaignsData, setCampaignsData] = useState([]);
-
-  const classes = useStyles();
 
   useEffect(() => {
     getCampaignsService()
@@ -35,7 +19,7 @@ const Explore = () => {
   return (
     <div>
       <Paper>
-        <Typography variant="h1" align="center" gutterBottom>
+        <Typography variant="h2" align="center" gutterBottom>
           Explore
         </Typography>
       </Paper>

@@ -50,8 +50,8 @@ module.exports = function (app) {
 
   app.get("/api/crowdfunding/get_one_campaign/:id", function (req, res) {
     Crowdfunding.findOne({ campaignName: req.params.id })
-      .then((object) => res.json(["success", object]))
-      .catch((error) => res.json(["error", error]));
+      .then((object) => res.json(["Success", object]))
+      .catch((error) => res.json(["Error", error]));
   });
 
   app.post("/api/crowdfunding/admin/stop_campaign", function (req, res) {

@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import { LinearProgress } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   },
   pos: {
     marginBottom: 12,
+  },
+  progress: {
+    marginTop: 15,
   },
 }));
 
@@ -42,9 +46,16 @@ const Product = ({ value }) => {
           <Typography variant="body2" component="p">
             {value.campaignDes}
           </Typography>
+          <LinearProgress
+            className={classes.progress}
+            variant="determinate"
+            value={value.currentAmount / value.targetAmount}
+          />
         </CardContent>
         <CardActions>
-          <Button size="small">Learn More</Button>
+          <Button href={`campaigns/${value.campaignName}`} size="small">
+            Learn More
+          </Button>
         </CardActions>
       </Card>
     </Grid>
