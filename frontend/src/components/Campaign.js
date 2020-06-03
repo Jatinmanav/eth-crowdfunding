@@ -7,8 +7,12 @@ import Typography from "@material-ui/core/Typography";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import getCampaignService from "../services/getOneCampaignComponent";
 import { AuthContext } from "../contexts/AuthContext";
+import investCampaign from "../services/investCampaignComponent";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -42,6 +46,9 @@ const Campaign = () => {
   const classes = useStyles();
   const { auth } = useContext(AuthContext);
   const [campaignInfo, setCampaignInfo] = useState(null);
+  const [amount, setAmount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     getCampaignService(window.location.pathname.split("/").pop())
       .then(([status, data]) => {
@@ -50,14 +57,41 @@ const Campaign = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(campaignInfo);
-
   const handleSubmit = (e) => {
-    e.preventDefaults();
+    e.preventDefault();
+    if (!isNaN(amount)) {
+      console.log(amount);
+      const postData = {
+        campaignName: campaignInfo.campaignName,
+        amount: amount,
+      };
+      investCampaign(postData).then(([status, data]) => {
+        console.log(data);
+        if (status) {
+          setErrorMessage(`You successfully invested ${amount}`);
+          setOpen(true);
+          setCampaignInfo({
+            ...campaignInfo,
+            currentAmount: data.currentAmount,
+          });
+        }
+      });
+    } else {
+      setErrorMessage("Please enter a Numeric Value");
+      setOpen(true);
+    }
   };
 
   const handleAmountChange = (e) => {
-    console.log(e.target.value);
+    setAmount(e.target.value);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setErrorMessage("");
+    setOpen(false);
   };
 
   return (
@@ -82,7 +116,10 @@ const Campaign = () => {
                 <LinearProgress
                   className={classes.progress}
                   variant="determinate"
-                  value={campaignInfo.currentAmount / campaignInfo.targetAmount}
+                  value={
+                    (campaignInfo.currentAmount / campaignInfo.targetAmount) *
+                    100
+                  }
                 />
               </Grid>
               <Grid className={classes.funds} item xs={12}>
@@ -131,6 +168,28 @@ const Campaign = () => {
       ) : (
         React.Fragment
       )}
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message={errorMessage}
+        variant="success"
+        action={[
+          <IconButton
+            key="close"
+            aria-label="close"
+            color="inherit"
+            className={classes.close}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
+      />
     </div>
   );
 };

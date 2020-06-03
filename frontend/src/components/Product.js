@@ -49,7 +49,7 @@ const Product = ({ value }) => {
           <LinearProgress
             className={classes.progress}
             variant="determinate"
-            value={value.currentAmount / value.targetAmount}
+            value={(value.currentAmount / value.targetAmount) * 100}
           />
         </CardContent>
         <CardActions>

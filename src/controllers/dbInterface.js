@@ -54,6 +54,18 @@ module.exports = function (app) {
       .catch((error) => res.json(["Error", error]));
   });
 
+  app.post("/api/crowdfunding/invest_campaign", function (req, res) {
+    Crowdfunding.findOneAndUpdate(
+      { campaignName: req.body.campaignName },
+      { $inc: { currentAmount: req.body.amount } },
+      {
+        projection: { campaignName: 1, currentAmount: 1 },
+      }
+    )
+      .then((updatedObject) => res.json(["success", updatedObject]))
+      .catch((error) => res.json(["error", error]));
+  });
+
   app.post("/api/crowdfunding/admin/stop_campaign", function (req, res) {
     Crowdfunding.findOneAndUpdate(
       { campaignName: req.body.campaignName },
