@@ -14,22 +14,23 @@ module.exports = function (app) {
       campaignName: body.campaignName,
       campaignDes: body.campaignDes,
       targetAmount: body.targetAmount,
+      email: body.email,
       currentAmount: 0,
       completed: false,
     });
-    fs.readFile(body.campaignImage, (error, data) => {
-      data = data.toString("base64");
-      crowdFundingObject.campaignImage = data;
-      crowdFundingObject.campaignImage.contentType = "image/png";
-      crowdFundingObject
-        .save()
-        .then((savedObject) => {
-          res.json(["success", savedObject]);
-        })
-        .catch((error) => {
-          res.json(["error", error]);
-        });
-    });
+
+    data = req.files.file.data.toString("base64");
+    console.log(data);
+    crowdFundingObject.campaignImage = data;
+    crowdFundingObject.campaignImage.contentType = "image/png";
+    crowdFundingObject
+      .save()
+      .then((savedObject) => {
+        res.json(["success", savedObject]);
+      })
+      .catch((error) => {
+        res.json(["error", error]);
+      });
   });
 
   app.get("/api/crowdfunding/get_all_campaigns", function (req, res) {

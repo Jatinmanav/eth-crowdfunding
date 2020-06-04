@@ -130,7 +130,7 @@ const Campaign = () => {
                   raised out of {campaignInfo.targetAmount}
                 </Typography>
               </Grid>
-              {auth ? (
+              {auth.isAuthenticated ? (
                 <Grid item className={classes.pay} xs={12}>
                   <form
                     onSubmit={handleSubmit}
@@ -166,7 +166,7 @@ const Campaign = () => {
           </Paper>
         </div>
       ) : (
-        React.Fragment
+        <React.Fragment />
       )}
       <Snackbar
         anchorOrigin={{

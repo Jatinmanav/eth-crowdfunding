@@ -3,9 +3,7 @@ import Colors from "../utils/ColorVariables";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
@@ -18,19 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { AuthContext, AuthContextProvider } from "../contexts/AuthContext";
-import signupService from "../services/signupComponent";
-
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-    </Typography>
-  );
-};
+import newCampaignService from "../services/newCampaignComponent";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -72,15 +58,15 @@ const theme = createMuiTheme({
   },
 });
 
-const SignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [rollNum, setRollNum] = useState("");
-  const [password, setPassword] = useState("");
+const Newcampaign = () => {
+  const [campaignName, setCampaignName] = useState("");
+  const [campaignDes, setCampaignDes] = useState("");
+  const [targetAmount, setTargetAmount] = useState("");
+  const [file, setFile] = useState("");
+  const [fileName, setFileName] = useState("Upload Image");
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
-  const { setAuthenticated } = useContext(AuthContext);
+  const { auth, setAuthenticated } = useContext(AuthContext);
 
   const classes = useStyles();
 
@@ -93,29 +79,25 @@ const SignUp = () => {
 
   const patterns = {
     // eslint-disable-next-line
-    email: /^[a-zA-Z\d]{2,}\@\w{2,}\.([a-z]{2,4})$/,
-    password: /^\w{8,20}$/,
-    rollnum: /^[0-9]{7}$/,
+    targetamount: /^[0-9]{3,}$/,
   };
 
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
+  const handleCampaignNameChange = (e) => {
+    setCampaignName(e.target.value);
   };
 
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+  const handleCampaignDesChange = (e) => {
+    setCampaignDes(e.target.value);
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleTargetAmountChange = (e) => {
+    setTargetAmount(e.target.value);
   };
 
-  const handleRollNumChange = (e) => {
-    setRollNum(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const handleFileUpload = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+    console.log(file);
   };
 
   const handleClose = (event, reason) => {
@@ -126,37 +108,32 @@ const SignUp = () => {
     setOpen(false);
   };
 
-  const verifyUser = async (signupObject) => {
-    const [result, userData] = await signupService(signupObject);
+  const verifyCampaign = async (campaignObject) => {
+    const [result, campaignData] = await newCampaignService(campaignObject);
     console.log(result);
-    console.log(userData);
-    if (result === true) {
-      setAuthenticated(userData.email);
+    console.log(campaignData);
+    if (result === "success") {
+      console.log("success");
     } else {
-      setErrorMessage("Email is already registered");
+      setErrorMessage("Campaign Name is already in use");
       setOpen(true);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const signupObject = {
-      firstName: firstName,
-      lastName: lastName,
-      rollNum: rollNum,
-      email: email,
-      password: password,
-    };
+    const formData = new FormData();
+    formData.append("campaignName", campaignName);
+    formData.append("campaignDes", campaignDes);
+    formData.append("targetAmount", targetAmount);
+    formData.append("email", auth.userName);
+    formData.append("file", file);
 
-    console.log(firstName, lastName, email, rollNum, password);
-    if (!patterns.email.test(email)) {
-      setErrorMessage("Enter a Valid Email ID");
-      setOpen(true);
-    } else if (!patterns.rollnum.test(rollNum)) {
-      setErrorMessage("Enter a Valid Roll Number");
+    if (!patterns.targetamount.test(targetAmount)) {
+      setErrorMessage("Enter a Valid Amount");
       setOpen(true);
     } else {
-      verifyUser(signupObject);
+      verifyCampaign(formData);
     }
   };
 
@@ -171,7 +148,7 @@ const SignUp = () => {
                   <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                  Sign Up
+                  New Campaign
                 </Typography>
                 <form
                   onSubmit={handleSubmit}
@@ -179,29 +156,29 @@ const SignUp = () => {
                   method="post"
                 >
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                       <TextField
-                        autoComplete="fname"
-                        name="firstName"
+                        autoComplete="cname"
+                        name="campaignName"
                         variant="outlined"
                         required
                         fullWidth
-                        id="firstName"
-                        label="First Name"
-                        onChange={handleFirstNameChange}
+                        id="campaignName"
+                        label="Campaign Name"
+                        onChange={handleCampaignNameChange}
                         autoFocus
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                       <TextField
                         variant="outlined"
                         required
                         fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        autoComplete="lname"
-                        onChange={handleLastNameChange}
+                        id="campaignDes"
+                        label="Campaign Description"
+                        name="campaignDes"
+                        autoComplete="cDes"
+                        onChange={handleCampaignDesChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -209,37 +186,32 @@ const SignUp = () => {
                         variant="outlined"
                         required
                         fullWidth
-                        id="rollNum"
-                        label="Roll Number"
-                        name="rollNum"
-                        autoComplete="rollnum"
-                        onChange={handleRollNumChange}
+                        id="targetAmount"
+                        label="Target Amount"
+                        name="targetAmount"
+                        autoComplete="targetAmount"
+                        onChange={handleTargetAmountChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        onChange={handleEmailChange}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={handlePasswordChange}
-                      />
+                      <div>
+                        <label htmlFor="imageFile">
+                          <input
+                            type="file"
+                            id="imageFile"
+                            style={{ display: "none" }}
+                            onChange={handleFileUpload}
+                          />
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            required
+                            component="span"
+                          >
+                            {fileName}
+                          </Button>
+                        </label>
+                      </div>
                     </Grid>
                   </Grid>
                   <Button
@@ -249,15 +221,8 @@ const SignUp = () => {
                     color="primary"
                     className={classes.submit}
                   >
-                    Sign Up
+                    Create
                   </Button>
-                  <Grid container justify="flex-end">
-                    <Grid item>
-                      <Link href="signin" variant="body2">
-                        Already have an account? Sign in
-                      </Link>
-                    </Grid>
-                  </Grid>
                 </form>
                 <Snackbar
                   anchorOrigin={{
@@ -283,9 +248,6 @@ const SignUp = () => {
                 />
               </div>
             </Card>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
           </Container>
         </ThemeProvider>
       </animated.div>
@@ -293,4 +255,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Newcampaign;

@@ -114,7 +114,7 @@ const Signin = () => {
     } else if (isValidUser) {
       console.log("success");
       //setUserData(userData);
-      setAuthenticated("test");
+      setAuthenticated(userData.email);
     } else {
       console.log("fail");
       setErrorMessage("Invalid Password");

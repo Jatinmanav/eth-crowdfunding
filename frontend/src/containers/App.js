@@ -7,6 +7,7 @@ import Signup from "../components/Signup";
 import Header from "../components/Header";
 import Explore from "../components/Explore";
 import Campaign from "../components/Campaign";
+import Newcampaign from "../components/Newcampaign";
 import colorVariables from "../utils/ColorVariables";
 
 const useStyles = makeStyles(() => ({
@@ -38,6 +39,9 @@ export default function App() {
             </Route>
             <Route path="/explore">
               <Explore />
+            </Route>
+            <Route path="/create-campaign">
+              <Newcampaign />
             </Route>
             <Route path="/campaigns/">
               <Campaign />

@@ -123,9 +123,18 @@ const Header = () => {
           </ListItem>
         </Link>
       </List>
-      {auth.isAuthenticated ? <React.Fragment /> : <Divider />}
+      <Divider />
       {auth.isAuthenticated ? (
-        <React.Fragment />
+        <List>
+          <Link to="/create-campaign" className={classes.listItem}>
+            <ListItem button key="create">
+              <ListItemIcon>
+                <AccountCircleRoundedIcon color="secondary" />
+              </ListItemIcon>
+              <ListItemText primary="Create Campaign" />
+            </ListItem>
+          </Link>
+        </List>
       ) : (
         <List>
           <Link to="/signup" className={classes.listItem}>
@@ -146,6 +155,7 @@ const Header = () => {
           </Link>
         </List>
       )}
+      {}
     </div>
   );
 

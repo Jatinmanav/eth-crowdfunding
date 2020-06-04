@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const fileUpload = require("express-fileupload");
 const config = require("./utils/config");
 const dbInterface = require("./controllers/dbInterface");
 const userAuth = require("./controllers/userAuth");
@@ -21,6 +22,7 @@ const startServer = async () => {
       console.log("error connecting to MongoDB:", error.message);
     });
   app.use(reqMiddleware.requestLogger);
+  app.use(fileUpload());
   dbInterface(app);
   userAuth(app);
   app.listen(config.PORT, (err) => {
