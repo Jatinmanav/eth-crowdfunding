@@ -5,6 +5,7 @@ import { AuthContextProvider } from "../contexts/AuthContext";
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
 import Header from "../components/Header";
+import Home from "../components/Home";
 import Explore from "../components/Explore";
 import Campaign from "../components/Campaign";
 import Newcampaign from "../components/Newcampaign";
@@ -52,8 +53,4 @@ export default function App() {
       </Router>
     </AuthContextProvider>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }

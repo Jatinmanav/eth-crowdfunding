@@ -66,7 +66,7 @@ const Newcampaign = () => {
   const [fileName, setFileName] = useState("Upload Image");
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
-  const { auth, setAuthenticated } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   const classes = useStyles();
 
