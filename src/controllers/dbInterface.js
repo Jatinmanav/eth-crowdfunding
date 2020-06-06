@@ -75,4 +75,24 @@ module.exports = function (app) {
       .then((updatedObject) => res.json(["success", updatedObject]))
       .catch((error) => res.json(["error", error]));
   });
+
+  app.post("/api/crowdfunding/home_page", function (req, res) {
+    const email = req.body.email;
+    Promise.all([
+      Crowdfunding.countDocuments({}),
+      Crowdfunding.find({ completed: false }).countDocuments(),
+      Crowdfunding.find({ email: email }).countDocuments(),
+      Crowdfunding.find(
+        { completed: false },
+        {
+          campaignName: 1,
+          currentAmount: 1,
+        }
+      )
+        .sort({ currentAmount: -1 })
+        .limit(3),
+    ])
+      .then((result) => res.json(["success", result]))
+      .catch((err) => res.json(["error", err]));
+  });
 };

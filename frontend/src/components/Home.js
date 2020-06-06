@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import homePageService from "../services/getHomePageComponent";
+import { AuthContext } from "../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   campaignCard: {
     width: "80%",
+    borderRadius: 14,
     backgroundColor: "red",
     margin: "auto",
     marginBottom: "5vh",
@@ -39,6 +42,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
+  const { auth } = useContext(AuthContext);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const dataObj = { email: auth.userName };
+    homePageService(dataObj)
+      .then(([status, data]) => (status ? setData(data) : setData([])))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [auth]);
 
   return (
     <div>
@@ -61,7 +75,7 @@ const Home = () => {
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  10
+                  {data.length > 1 ? data[0] : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -78,7 +92,7 @@ const Home = () => {
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  5
+                  {data.length > 1 ? data[1] : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -95,7 +109,7 @@ const Home = () => {
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  2
+                  {data.length > 1 ? data[2] : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -113,11 +127,11 @@ const Home = () => {
                   color="textSecondary"
                   gutterBottom
                 >
-                  Campaign 1
+                  {data.length > 1 ? data[3][0].campaignName : 0}
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  adjective
+                  {data.length > 1 ? data[3][0].currentAmount : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -130,11 +144,11 @@ const Home = () => {
                   color="textSecondary"
                   gutterBottom
                 >
-                  Campaign 2
+                  {data.length > 1 ? data[3][1].campaignName : 0}
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  adjective
+                  {data.length > 1 ? data[3][1].currentAmount : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -147,11 +161,11 @@ const Home = () => {
                   color="textSecondary"
                   gutterBottom
                 >
-                  Campaign 3
+                  {data.length > 1 ? data[3][2].campaignName : 0}
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.pos} color="textSecondary">
-                  adjective
+                  {data.length > 1 ? data[3][2].currentAmount : 0}
                 </Typography>
               </CardContent>
             </Card>
