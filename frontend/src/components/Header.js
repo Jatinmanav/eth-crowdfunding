@@ -27,12 +27,9 @@ import colorVariables from "../utils/ColorVariables";
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark",
+    type: "light",
     primary: {
       main: colorVariables.fontColor1,
-    },
-    secondary: {
-      main: "#ddd",
     },
   },
 });

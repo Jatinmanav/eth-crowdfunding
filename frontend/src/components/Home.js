@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import homePageService from "../services/getHomePageComponent";
 import { AuthContext } from "../contexts/AuthContext";
+import Colors from "../utils/ColorVariables";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "5vh",
   },
   card: {
-    backgroundColor: "red",
-    textAlign: "center",
+    backgroundColor: Colors.backgroundColor2,
+    position: "relative",
     margin: "auto",
     height: "25vh",
     width: "25vh",
@@ -28,15 +29,39 @@ const useStyles = makeStyles((theme) => ({
   campaignCard: {
     width: "80%",
     borderRadius: 14,
-    backgroundColor: "red",
+    position: "relative",
+    backgroundColor: Colors.backgroundColor2,
     margin: "auto",
     marginBottom: "5vh",
   },
   primaryHeading: {
     margin: "2vh",
+    color: Colors.fontColor1,
   },
   secondaryHeading: {
     margin: "2vh",
+    color: Colors.fontColor1,
+  },
+  cardTitle: {
+    color: Colors.fontColor3,
+    position: "absolute",
+    bottom: 10,
+    fontSize: 16,
+  },
+  campaignCardTitle: {
+    color: Colors.fontColor3,
+    block: "inline",
+  },
+  cardNumber: {
+    color: Colors.fontColor3,
+    position: "absolute",
+    bottom: "30%",
+    left: "10%",
+    fontSize: 66,
+  },
+  campaignCardNumber: {
+    color: Colors.fontColor3,
+    block: "inline",
   },
 }));
 
@@ -66,15 +91,11 @@ const Home = () => {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography className={classes.cardTitle} gutterBottom>
                   Total Campaigns
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[0] : 0}
                 </Typography>
               </CardContent>
@@ -83,15 +104,11 @@ const Home = () => {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography className={classes.cardTitle} gutterBottom>
                   Current Campaigns
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[1] : 0}
                 </Typography>
               </CardContent>
@@ -100,15 +117,11 @@ const Home = () => {
           <Grid item xs={12} sm={4}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography className={classes.cardTitle} gutterBottom>
                   Your Campaigns
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[2] : 0}
                 </Typography>
               </CardContent>
@@ -122,15 +135,11 @@ const Home = () => {
           <Grid item xs={12}>
             <Card className={classes.campaignCard}>
               <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography className={classes.campaignCardTitle} gutterBottom>
                   {data.length > 1 ? data[3][0].campaignName : 0}
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.campaignCardNumber}>
                   {data.length > 1 ? data[3][0].currentAmount : 0}
                 </Typography>
               </CardContent>
@@ -139,15 +148,11 @@ const Home = () => {
           <Grid item xs={12}>
             <Card className={classes.campaignCard}>
               <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography className={classes.campaignCardTitle} gutterBottom>
                   {data.length > 1 ? data[3][1].campaignName : 0}
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.campaignCardNumber}>
                   {data.length > 1 ? data[3][1].currentAmount : 0}
                 </Typography>
               </CardContent>
@@ -156,15 +161,11 @@ const Home = () => {
           <Grid item xs={12}>
             <Card className={classes.campaignCard}>
               <CardContent>
-                <Typography
-                  className={classes.title}
-                  color="textSecondary"
-                  gutterBottom
-                >
+                <Typography className={classes.campaignCardTitle} gutterBottom>
                   {data.length > 1 ? data[3][2].campaignName : 0}
                 </Typography>
                 <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.pos} color="textSecondary">
+                <Typography className={classes.campaignCardNumber}>
                   {data.length > 1 ? data[3][2].currentAmount : 0}
                 </Typography>
               </CardContent>

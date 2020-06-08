@@ -23,15 +23,17 @@ const Explore = () => {
           Explore
         </Typography>
       </Paper>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={2}>
-            {campaignsData.map((value) => (
-              <Product key={value._id} value={value} />
-            ))}
+      <Paper>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={2}>
+              {campaignsData.map((value) => (
+                <Product key={value._id} value={value} />
+              ))}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </div>
   );
 };

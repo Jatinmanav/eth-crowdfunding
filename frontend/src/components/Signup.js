@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     minWidth: 325,
     padding: theme.spacing(4),
+    backgroundColor: Colors.backgroundColor2,
   },
   paper: {
     display: "flex",
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark",
+    type: "light",
     primary: {
       main: Colors.fontColor1,
     },

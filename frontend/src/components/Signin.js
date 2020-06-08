@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import Colors from "../utils/ColorVariables";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -36,16 +35,7 @@ const Copyright = () => {
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark",
-    background: {
-      paper: Colors.backgroundColor1,
-    },
-    primary: {
-      main: Colors.fontColor1,
-    },
-    secondary: {
-      main: Colors.backgroundColor1,
-    },
+    type: "light",
   },
 });
 

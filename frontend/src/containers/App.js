@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthContextProvider } from "../contexts/AuthContext";
 import Signin from "../components/Signin";
@@ -9,20 +8,8 @@ import Home from "../components/Home";
 import Explore from "../components/Explore";
 import Campaign from "../components/Campaign";
 import Newcampaign from "../components/Newcampaign";
-import colorVariables from "../utils/ColorVariables";
-
-const useStyles = makeStyles(() => ({
-  "@global": {
-    body: {
-      backgroundColor: colorVariables.backgroundColor1,
-    },
-  },
-}));
 
 export default function App() {
-  //eslint-disable-next-line
-  const classes = useStyles();
-
   return (
     <AuthContextProvider>
       <Router>
