@@ -7,10 +7,14 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { LinearProgress } from "@material-ui/core";
+import Colors from "../utils/ColorVariables";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    minWidth: 275,
+    width: 275,
+    height: "100%",
+    backgroundColor: Colors.backgroundColor2,
+    margin: "auto",
   },
   title: {
     fontSize: 14,
@@ -27,7 +31,7 @@ const Product = ({ value }) => {
   const classes = useStyles();
 
   return (
-    <Grid key={value._id} item>
+    <Grid key={value._id} item md={2}>
       <Card className={classes.card}>
         <CardContent>
           <Typography

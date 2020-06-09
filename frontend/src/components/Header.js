@@ -21,6 +21,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import ViewModuleRoundedIcon from "@material-ui/icons/ViewModuleRounded";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
+import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import colorVariables from "../utils/ColorVariables";
@@ -61,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
   },
   fullList: {
     width: "auto",
+  },
+  icon: {
+    color: colorVariables.fontColor3,
   },
 }));
 
@@ -106,7 +110,7 @@ const Header = () => {
         <Link to="/" className={classes.listItem}>
           <ListItem button key="home">
             <ListItemIcon>
-              <HomeRoundedIcon color="secondary" />
+              <HomeRoundedIcon className={classes.icon} />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
@@ -114,7 +118,7 @@ const Header = () => {
         <Link to="/explore" className={classes.listItem}>
           <ListItem button key="explore">
             <ListItemIcon>
-              <ViewModuleRoundedIcon color="secondary" />
+              <ViewModuleRoundedIcon className={classes.icon} />
             </ListItemIcon>
             <ListItemText primary="Explore" />
           </ListItem>
@@ -126,7 +130,7 @@ const Header = () => {
           <Link to="/create-campaign" className={classes.listItem}>
             <ListItem button key="create">
               <ListItemIcon>
-                <AccountCircleRoundedIcon color="secondary" />
+                <AccountCircleRoundedIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText primary="Create Campaign" />
             </ListItem>
@@ -134,20 +138,20 @@ const Header = () => {
         </List>
       ) : (
         <List>
-          <Link to="/signup" className={classes.listItem}>
-            <ListItem button key="signup">
-              <ListItemIcon>
-                <AccountCircleRoundedIcon color="secondary" />
-              </ListItemIcon>
-              <ListItemText primary="Signup" />
-            </ListItem>
-          </Link>
           <Link to="/signin" className={classes.listItem}>
             <ListItem button key="signup">
               <ListItemIcon>
-                <AccountCircleRoundedIcon color="secondary" />
+                <AccountCircleRoundedIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText primary="Signin" />
+            </ListItem>
+          </Link>
+          <Link to="/signup" className={classes.listItem}>
+            <ListItem button key="signup">
+              <ListItemIcon>
+                <AccountBoxRoundedIcon className={classes.icon} />
+              </ListItemIcon>
+              <ListItemText primary="Signup" />
             </ListItem>
           </Link>
         </List>
@@ -183,7 +187,7 @@ const Header = () => {
                     onClick={handleMenu}
                     color="inherit"
                   >
-                    <AccountCircle />
+                    <AccountCircle className={classes.icon} />
                   </IconButton>
                   <Menu
                     id="menu-appbar"

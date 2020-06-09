@@ -8,12 +8,16 @@ import Typography from "@material-ui/core/Typography";
 import homePageService from "../services/getHomePageComponent";
 import { AuthContext } from "../contexts/AuthContext";
 import Colors from "../utils/ColorVariables";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    position: "relative",
+    padding: "2vh",
     width: "80vw",
     margin: "auto",
     marginTop: "5vh",
+    marginBottom: "5vh",
   },
   card: {
     backgroundColor: Colors.backgroundColor2,
@@ -33,12 +37,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: Colors.backgroundColor2,
     margin: "auto",
     marginBottom: "5vh",
+    textDecoration: "none",
+  },
+  campaignCardLink: {
+    textDecoration: "none",
   },
   primaryHeading: {
     margin: "2vh",
+    fontSize: 40,
     color: Colors.fontColor1,
   },
   secondaryHeading: {
+    fontSize: 30,
     margin: "2vh",
     color: Colors.fontColor1,
   },
@@ -50,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   campaignCardTitle: {
     color: Colors.fontColor3,
-    block: "inline",
+    paddingLeft: "1vh",
   },
   cardNumber: {
     color: Colors.fontColor3,
@@ -61,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
   },
   campaignCardNumber: {
     color: Colors.fontColor3,
-    block: "inline",
+    paddingLeft: "2vh",
+    fontSize: 30,
   },
 }));
 
@@ -94,7 +105,6 @@ const Home = () => {
                 <Typography className={classes.cardTitle} gutterBottom>
                   Total Campaigns
                 </Typography>
-                <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[0] : 0}
                 </Typography>
@@ -107,7 +117,6 @@ const Home = () => {
                 <Typography className={classes.cardTitle} gutterBottom>
                   Current Campaigns
                 </Typography>
-                <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[1] : 0}
                 </Typography>
@@ -120,7 +129,6 @@ const Home = () => {
                 <Typography className={classes.cardTitle} gutterBottom>
                   Your Campaigns
                 </Typography>
-                <Typography variant="h5" component="h2"></Typography>
                 <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[2] : 0}
                 </Typography>
@@ -134,41 +142,74 @@ const Home = () => {
           </Grid>
           <Grid item xs={12}>
             <Card className={classes.campaignCard}>
-              <CardContent>
-                <Typography className={classes.campaignCardTitle} gutterBottom>
-                  {data.length > 1 ? data[3][0].campaignName : 0}
-                </Typography>
-                <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.campaignCardNumber}>
-                  {data.length > 1 ? data[3][0].currentAmount : 0}
-                </Typography>
-              </CardContent>
+              <Link
+                className={classes.campaignCardLink}
+                to={
+                  data.length > 1
+                    ? `campaigns/${data[3][0].campaignName}`
+                    : "home"
+                }
+              >
+                <CardContent>
+                  <Typography
+                    className={classes.campaignCardTitle}
+                    gutterBottom
+                  >
+                    {data.length > 1 ? data[3][0].campaignName : 0}
+                  </Typography>
+                  <Typography className={classes.campaignCardNumber}>
+                    {data.length > 1 ? data[3][0].currentAmount : 0}
+                  </Typography>
+                </CardContent>
+              </Link>
             </Card>
           </Grid>
           <Grid item xs={12}>
             <Card className={classes.campaignCard}>
-              <CardContent>
-                <Typography className={classes.campaignCardTitle} gutterBottom>
-                  {data.length > 1 ? data[3][1].campaignName : 0}
-                </Typography>
-                <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.campaignCardNumber}>
-                  {data.length > 1 ? data[3][1].currentAmount : 0}
-                </Typography>
-              </CardContent>
+              <Link
+                className={classes.campaignCardLink}
+                to={
+                  data.length > 1
+                    ? `campaigns/${data[3][1].campaignName}`
+                    : "home"
+                }
+              >
+                <CardContent>
+                  <Typography
+                    className={classes.campaignCardTitle}
+                    gutterBottom
+                  >
+                    {data.length > 1 ? data[3][1].campaignName : 0}
+                  </Typography>
+                  <Typography className={classes.campaignCardNumber}>
+                    {data.length > 1 ? data[3][1].currentAmount : 0}
+                  </Typography>
+                </CardContent>
+              </Link>
             </Card>
           </Grid>
           <Grid item xs={12}>
             <Card className={classes.campaignCard}>
-              <CardContent>
-                <Typography className={classes.campaignCardTitle} gutterBottom>
-                  {data.length > 1 ? data[3][2].campaignName : 0}
-                </Typography>
-                <Typography variant="h5" component="h2"></Typography>
-                <Typography className={classes.campaignCardNumber}>
-                  {data.length > 1 ? data[3][2].currentAmount : 0}
-                </Typography>
-              </CardContent>
+              <Link
+                className={classes.campaignCardLink}
+                to={
+                  data.length > 1
+                    ? `campaigns/${data[3][2].campaignName}`
+                    : "home"
+                }
+              >
+                <CardContent>
+                  <Typography
+                    className={classes.campaignCardTitle}
+                    gutterBottom
+                  >
+                    {data.length > 1 ? data[3][2].campaignName : 0}
+                  </Typography>
+                  <Typography className={classes.campaignCardNumber}>
+                    {data.length > 1 ? data[3][2].currentAmount : 0}
+                  </Typography>
+                </CardContent>
+              </Link>
             </Card>
           </Grid>
         </Grid>

@@ -19,7 +19,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { AuthContext } from "../contexts/AuthContext";
 import signinService from "../services/signinComponent";
-import imageUrl from "../images/loginPageImage.jpeg";
+import imageUrl from "../images/loginPageImage.jpg";
 
 const Copyright = () => {
   return (
