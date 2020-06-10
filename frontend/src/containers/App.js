@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Web3 from "web3";
 import { AuthContext } from "../contexts/AuthContext";
 import Signin from "../components/Signin";
 import Signup from "../components/Signup";
@@ -8,9 +9,14 @@ import Home from "../components/Home";
 import Explore from "../components/Explore";
 import Campaign from "../components/Campaign";
 import Newcampaign from "../components/Newcampaign";
+import { RPC_URL, CONTRACT_ADDRESS } from "../utils/config";
+import abi from "../utils/abi";
 
 export default function App() {
   const { auth } = useContext(AuthContext);
+  const web3 = new Web3(RPC_URL);
+  const contract = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
+
   return (
     <Router>
       <Header />
@@ -29,10 +35,14 @@ export default function App() {
             <Explore />
           </Route>
           <Route path="/create-campaign">
-            {auth.isAuthenticated ? <Newcampaign /> : <Signin />}
+            {auth.isAuthenticated ? (
+              <Newcampaign web3={web3} contract={contract} />
+            ) : (
+              <Signin />
+            )}
           </Route>
           <Route path="/campaigns/">
-            <Campaign />
+            <Campaign web3={web3} contract={contract} />
           </Route>
           <Route path="/" render={() => <h1>Error 404: Page not found</h1>} />
         </Switch>

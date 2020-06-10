@@ -11,6 +11,7 @@ module.exports = function (app) {
   app.post("/api/crowdfunding/create_campaign", function (req, res) {
     const body = req.body;
     const crowdFundingObject = new Crowdfunding({
+      campaignID: body.campaignID,
       campaignName: body.campaignName,
       campaignDes: body.campaignDes,
       targetAmount: body.targetAmount,
@@ -19,10 +20,11 @@ module.exports = function (app) {
       completed: false,
     });
 
-    data = req.files.file.data.toString("base64");
-    console.log(data);
-    crowdFundingObject.campaignImage = data;
-    crowdFundingObject.campaignImage.contentType = "image/png";
+    if (req.files != null) {
+      data = req.files.file.data.toString("base64");
+      crowdFundingObject.campaignImage = data;
+      crowdFundingObject.campaignImage.contentType = "image/png";
+    }
     crowdFundingObject
       .save()
       .then((savedObject) => {

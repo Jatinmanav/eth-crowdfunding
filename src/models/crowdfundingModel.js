@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const crowdfundingSchema = new mongoose.Schema({
+  campaignID: {
+    type: Number,
+    required: true,
+  },
   campaignName: {
     type: String,
     minlength: 2,

@@ -59,7 +59,7 @@ const theme = createMuiTheme({
   },
 });
 
-const Newcampaign = () => {
+const Newcampaign = ({ web3, contract }) => {
   const [campaignName, setCampaignName] = useState("");
   const [campaignDes, setCampaignDes] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
@@ -110,15 +110,33 @@ const Newcampaign = () => {
   };
 
   const verifyCampaign = async (campaignObject) => {
-    const [result, campaignData] = await newCampaignService(campaignObject);
-    console.log(result);
-    console.log(campaignData);
-    if (result === "success") {
-      console.log("success");
-    } else {
-      setErrorMessage("Campaign Name is already in use");
-      setOpen(true);
-    }
+    contract.methods
+      .createTask(campaignName, targetAmount)
+      .send({
+        from: "0xf921058D24CE87cb21837913eb9a94567B25382F",
+        gas: 3000000,
+      })
+      .then((resOne) => {
+        console.log(resOne);
+        contract.methods.taskCount().call((err, resTwo) => {
+          contract.methods.tasks(resTwo).call((err, resThree) => {
+            campaignObject.append("campaignID", resThree.id);
+            newCampaignService(campaignObject).then(([status, data]) => {
+              if (status === "success") {
+                setErrorMessage("Campaign Successfully Created");
+                setOpen(true);
+              } else {
+                setErrorMessage("Campaign Name is already in use");
+                setOpen(true);
+              }
+            });
+          });
+        });
+      })
+      .catch((err) => {
+        setErrorMessage(err);
+        setOpen(true);
+      });
   };
 
   const handleSubmit = (e) => {
