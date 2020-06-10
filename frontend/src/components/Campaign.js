@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Campaign = () => {
+const Campaign = ({ web3, contract }) => {
   const classes = useStyles();
   const { auth } = useContext(AuthContext);
   const [campaignInfo, setCampaignInfo] = useState(null);
@@ -53,6 +53,7 @@ const Campaign = () => {
     getCampaignService(window.location.pathname.split("/").pop())
       .then(([status, data]) => {
         status ? setCampaignInfo(data) : setCampaignInfo(null);
+        console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -65,16 +66,31 @@ const Campaign = () => {
         campaignName: campaignInfo.campaignName,
         amount: amount,
       };
-      investCampaign(postData).then(([status, data]) => {
-        console.log(data);
-        if (status) {
-          setErrorMessage(`You successfully invested ${amount}`);
-          setOpen(true);
-          setCampaignInfo({
-            ...campaignInfo,
-            currentAmount: data.currentAmount,
+      web3.eth.getAccounts().then((res) => {
+        web3.eth
+          .sendTransaction({
+            from: res[0],
+            to: campaignInfo.campaignAddress,
+            value: web3.utils.toWei(amount, "ether"),
+          })
+          .then((resOne) => {
+            contract.methods
+              .investAmount(campaignInfo.campaignID, amount)
+              .send({ from: res[0], gas: 3000000 })
+              .then((resTwo) => {
+                investCampaign(postData).then(([status, data]) => {
+                  console.log(data);
+                  if (status) {
+                    setErrorMessage(`You successfully invested ${amount}`);
+                    setOpen(true);
+                    setCampaignInfo({
+                      ...campaignInfo,
+                      currentAmount: data.currentAmount,
+                    });
+                  }
+                });
+              });
           });
-        }
       });
     } else {
       setErrorMessage("Please enter a Numeric Value");

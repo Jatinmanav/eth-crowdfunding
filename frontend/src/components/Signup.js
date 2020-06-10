@@ -74,10 +74,8 @@ const theme = createMuiTheme({
 });
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
-  const [rollNum, setRollNum] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
@@ -99,20 +97,12 @@ const SignUp = () => {
     rollnum: /^[0-9]{7}$/,
   };
 
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-  };
-
-  const handleRollNumChange = (e) => {
-    setRollNum(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -142,19 +132,13 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const signupObject = {
-      firstName: firstName,
-      lastName: lastName,
-      rollNum: rollNum,
+      userName: userName,
       email: email,
       password: password,
     };
 
-    console.log(firstName, lastName, email, rollNum, password);
     if (!patterns.email.test(email)) {
       setErrorMessage("Enter a Valid Email ID");
-      setOpen(true);
-    } else if (!patterns.rollnum.test(rollNum)) {
-      setErrorMessage("Enter a Valid Roll Number");
       setOpen(true);
     } else {
       verifyUser(signupObject);
@@ -180,41 +164,17 @@ const SignUp = () => {
                   method="post"
                 >
                   <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        autoComplete="fname"
-                        name="firstName"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="firstName"
-                        label="First Name"
-                        onChange={handleFirstNameChange}
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        autoComplete="lname"
-                        onChange={handleLastNameChange}
-                      />
-                    </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        autoComplete="username"
+                        name="userName"
                         variant="outlined"
                         required
                         fullWidth
-                        id="rollNum"
-                        label="Roll Number"
-                        name="rollNum"
-                        autoComplete="rollnum"
-                        onChange={handleRollNumChange}
+                        id="userName"
+                        label="User Name"
+                        onChange={handleUserNameChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>

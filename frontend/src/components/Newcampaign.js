@@ -110,33 +110,36 @@ const Newcampaign = ({ web3, contract }) => {
   };
 
   const verifyCampaign = async (campaignObject) => {
-    contract.methods
-      .createTask(campaignName, targetAmount)
-      .send({
-        from: "0xf921058D24CE87cb21837913eb9a94567B25382F",
-        gas: 3000000,
-      })
-      .then((resOne) => {
-        console.log(resOne);
-        contract.methods.taskCount().call((err, resTwo) => {
-          contract.methods.tasks(resTwo).call((err, resThree) => {
-            campaignObject.append("campaignID", resThree.id);
-            newCampaignService(campaignObject).then(([status, data]) => {
-              if (status === "success") {
-                setErrorMessage("Campaign Successfully Created");
-                setOpen(true);
-              } else {
-                setErrorMessage("Campaign Name is already in use");
-                setOpen(true);
-              }
+    web3.eth.getAccounts().then((res) => {
+      contract.methods
+        .createTask(campaignName, targetAmount)
+        .send({
+          from: res[0],
+          gas: 3000000,
+        })
+        .then((resOne) => {
+          console.log(resOne);
+          contract.methods.taskCount().call((err, resTwo) => {
+            contract.methods.tasks(resTwo).call((err, resThree) => {
+              campaignObject.append("campaignID", resThree.id);
+              campaignObject.append("campaignAddress", res[0]);
+              newCampaignService(campaignObject).then(([status, data]) => {
+                if (status === "success") {
+                  setErrorMessage("Campaign Successfully Created");
+                  setOpen(true);
+                } else {
+                  setErrorMessage("Campaign Name is already in use");
+                  setOpen(true);
+                }
+              });
             });
           });
+        })
+        .catch((err) => {
+          setErrorMessage(err);
+          setOpen(true);
         });
-      })
-      .catch((err) => {
-        setErrorMessage(err);
-        setOpen(true);
-      });
+    });
   };
 
   const handleSubmit = (e) => {

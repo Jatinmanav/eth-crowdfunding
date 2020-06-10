@@ -14,6 +14,7 @@ module.exports = function (app) {
       campaignID: body.campaignID,
       campaignName: body.campaignName,
       campaignDes: body.campaignDes,
+      campaignAddress: body.campaignAddress,
       targetAmount: body.targetAmount,
       email: body.email,
       currentAmount: 0,

@@ -9,13 +9,20 @@ import Home from "../components/Home";
 import Explore from "../components/Explore";
 import Campaign from "../components/Campaign";
 import Newcampaign from "../components/Newcampaign";
-import { RPC_URL, CONTRACT_ADDRESS } from "../utils/config";
+import { CONTRACT_ADDRESS } from "../utils/config";
 import abi from "../utils/abi";
 
 export default function App() {
   const { auth } = useContext(AuthContext);
-  const web3 = new Web3(RPC_URL);
+  //const web3 = new Web3(RPC_URL);
+  const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(abi, CONTRACT_ADDRESS);
+  window.ethereum.enable().catch((err) => {
+    console.log(err);
+  });
+  web3.eth.getAccounts().then((res) => {
+    console.log(res[0]);
+  });
 
   return (
     <Router>

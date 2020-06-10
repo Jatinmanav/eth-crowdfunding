@@ -14,6 +14,10 @@ const crowdfundingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  campaignAddress: {
+    type: String,
+    required: true,
+  },
   campaignImage: {
     type: String,
     required: false,
