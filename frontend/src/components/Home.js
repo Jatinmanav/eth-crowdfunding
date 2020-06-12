@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     marginBottom: "5vh",
     textDecoration: "none",
+    "&:hover": {
+      backgroundColor: Colors.backgroundColor3,
+    },
   },
   campaignCardLink: {
     textDecoration: "none",
@@ -69,12 +72,39 @@ const useStyles = makeStyles((theme) => ({
     left: "10%",
     fontSize: 66,
   },
+  cardNumber2: {
+    color: Colors.fontColor3,
+    position: "absolute",
+    bottom: "30%",
+    left: "5%",
+    fontSize: 66,
+  },
   campaignCardNumber: {
     color: Colors.fontColor3,
     paddingLeft: "2vh",
     fontSize: 30,
   },
 }));
+
+function nFormatter(num, digits) {
+  var si = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "k" },
+    { value: 1e6, symbol: "M" },
+    { value: 1e9, symbol: "G" },
+    { value: 1e12, symbol: "T" },
+    { value: 1e15, symbol: "P" },
+    { value: 1e18, symbol: "E" },
+  ];
+  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
+}
 
 const Home = () => {
   const classes = useStyles();
@@ -84,7 +114,10 @@ const Home = () => {
   useEffect(() => {
     const dataObj = { email: auth.userName };
     homePageService(dataObj)
-      .then(([status, data]) => (status ? setData(data) : setData([])))
+      .then(([status, data]) => {
+        status ? setData(data) : setData([]);
+        console.log(data);
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -99,7 +132,7 @@ const Home = () => {
               Home Page
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card className={classes.card}>
               <CardContent>
                 <Typography className={classes.cardTitle} gutterBottom>
@@ -111,7 +144,7 @@ const Home = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card className={classes.card}>
               <CardContent>
                 <Typography className={classes.cardTitle} gutterBottom>
@@ -123,7 +156,7 @@ const Home = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6} md={3}>
             <Card className={classes.card}>
               <CardContent>
                 <Typography className={classes.cardTitle} gutterBottom>
@@ -131,6 +164,18 @@ const Home = () => {
                 </Typography>
                 <Typography className={classes.cardNumber}>
                   {data.length > 1 ? data[2] : 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography className={classes.cardTitle} gutterBottom>
+                  Funding Raised
+                </Typography>
+                <Typography className={classes.cardNumber2}>
+                  {data.length > 1 ? nFormatter(data[3][0].value, 1) : 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -155,10 +200,10 @@ const Home = () => {
                     className={classes.campaignCardTitle}
                     gutterBottom
                   >
-                    {data.length > 1 ? data[3][0].campaignName : 0}
+                    {data.length > 1 ? data[4][0].campaignName : 0}
                   </Typography>
                   <Typography className={classes.campaignCardNumber}>
-                    {data.length > 1 ? data[3][0].currentAmount : 0}
+                    {data.length > 1 ? data[4][0].currentAmount : 0}
                   </Typography>
                 </CardContent>
               </Link>
@@ -170,7 +215,7 @@ const Home = () => {
                 className={classes.campaignCardLink}
                 to={
                   data.length > 1
-                    ? `campaigns/${data[3][1].campaignName}`
+                    ? `campaigns/${data[4][1].campaignName}`
                     : "home"
                 }
               >
@@ -179,10 +224,10 @@ const Home = () => {
                     className={classes.campaignCardTitle}
                     gutterBottom
                   >
-                    {data.length > 1 ? data[3][1].campaignName : 0}
+                    {data.length > 1 ? data[4][1].campaignName : 0}
                   </Typography>
                   <Typography className={classes.campaignCardNumber}>
-                    {data.length > 1 ? data[3][1].currentAmount : 0}
+                    {data.length > 1 ? data[4][1].currentAmount : 0}
                   </Typography>
                 </CardContent>
               </Link>
@@ -194,7 +239,7 @@ const Home = () => {
                 className={classes.campaignCardLink}
                 to={
                   data.length > 1
-                    ? `campaigns/${data[3][2].campaignName}`
+                    ? `campaigns/${data[4][2].campaignName}`
                     : "home"
                 }
               >
@@ -203,10 +248,10 @@ const Home = () => {
                     className={classes.campaignCardTitle}
                     gutterBottom
                   >
-                    {data.length > 1 ? data[3][2].campaignName : 0}
+                    {data.length > 1 ? data[4][2].campaignName : 0}
                   </Typography>
                   <Typography className={classes.campaignCardNumber}>
-                    {data.length > 1 ? data[3][2].currentAmount : 0}
+                    {data.length > 1 ? data[4][2].currentAmount : 0}
                   </Typography>
                 </CardContent>
               </Link>

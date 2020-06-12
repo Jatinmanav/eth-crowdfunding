@@ -25,6 +25,7 @@ import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import colorVariables from "../utils/ColorVariables";
+import ethereum from "../images/ethereum.svg";
 
 const theme = createMuiTheme({
   palette: {
@@ -45,9 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: colorVariables.fontColor3,
   },
   title: {
     flexGrow: 1,
+    color: colorVariables.fontColor3,
   },
   list: {
     width: 250,
@@ -65,6 +68,11 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     color: colorVariables.fontColor3,
+  },
+  ethereumIcon: {
+    color: colorVariables.fontColor3,
+    width: 15,
+    margin: 5,
   },
 }));
 
@@ -164,7 +172,7 @@ const Header = () => {
     <MuiThemeProvider theme={theme}>
       <div>
         <div className={classes.root}>
-          <AppBar className={classes.appBar} position="static">
+          <AppBar className={classes.appBar} position="fixed">
             <Toolbar>
               <IconButton
                 edge="start"
@@ -175,6 +183,11 @@ const Header = () => {
               >
                 <MenuIcon />
               </IconButton>
+              <img
+                src={ethereum}
+                className={classes.ethereumIcon}
+                alt="Ethereum_logo"
+              />
               <Typography variant="h6" className={classes.title}>
                 Eth-Crowdfunding
               </Typography>

@@ -85,6 +85,16 @@ module.exports = function (app) {
       Crowdfunding.countDocuments({}),
       Crowdfunding.find({ completed: false }).countDocuments(),
       Crowdfunding.find({ email: email }).countDocuments(),
+      Crowdfunding.aggregate([
+        {
+          $group: {
+            _id: null,
+            value: {
+              $sum: "$currentAmount",
+            },
+          },
+        },
+      ]),
       Crowdfunding.find(
         { completed: false },
         {

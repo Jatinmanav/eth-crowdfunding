@@ -6,6 +6,7 @@ const colorVariables = {
   //darkGold: '#b99458',
   backgroundColor1: "#FFFFFF",
   backgroundColor2: "#FAFAFB",
+  backgroundColor3: "#F3F3F3",
 };
 
 export default colorVariables;
