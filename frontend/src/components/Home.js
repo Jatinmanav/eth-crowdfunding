@@ -191,7 +191,7 @@ const Home = () => {
                 className={classes.campaignCardLink}
                 to={
                   data.length > 1
-                    ? `campaigns/${data[3][0].campaignName}`
+                    ? `campaigns/${data[4][0].campaignName}`
                     : "home"
                 }
               >
