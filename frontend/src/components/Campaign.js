@@ -17,7 +17,7 @@ import investCampaign from "../services/investCampaignComponent";
 const useStyles = makeStyles((theme) => ({
   image: {
     width: "100vw",
-    height: "25vh",
+    height: "30vh",
   },
   paper: {
     width: "75vw",
